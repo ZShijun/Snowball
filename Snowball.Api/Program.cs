@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Snowball
+namespace Snowball.Api
 {
     public class Program
     {

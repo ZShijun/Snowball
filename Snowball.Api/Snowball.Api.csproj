@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Snowball.Application\Snowball.Application.csproj" />
+    <ProjectReference Include="..\Snowball.Bookshelf.Repositories\Snowball.Bookshelf.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="dockerbuild.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

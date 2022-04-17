@@ -1,6 +1,6 @@
 using System;
 
-namespace Snowball
+namespace Snowball.Api
 {
     public class WeatherForecast
     {
