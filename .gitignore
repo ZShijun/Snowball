@@ -1,6 +1,7 @@
 **/.git
 **/.gitignore
 **/.vs
-**/*.*proj.user
+**/*.*.user
 **/bin
 **/obj
+**/.config
