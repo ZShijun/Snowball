@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Text;
 
-namespace Snowball.Infrastructure.Core.Extensions
+namespace Snowball.Core.Extensions
 {
     public static class EnumExtensions
     {

@@ -1,11 +1,11 @@
-﻿using Snowball.Infrastructure.Core.Extensions;
+﻿using Snowball.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Xunit;
 
-namespace Snowball.Infrastructure.Core.UnitTests.Extensions
+namespace Snowball.Core.UnitTests.Extensions
 {
     public class EnumExtensionsTests
     {

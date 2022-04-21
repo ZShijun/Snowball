@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -5,6 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Snowball.Application;
+using Snowball.Core.Data;
+using Snowball.Domain.Bookshelf;
+using Snowball.Domain.Bookshelf.Repositories;
+using Snowball.Domain.Bookshelf.Services;
+using Snowball.Repositories.Bookshelf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +32,13 @@ namespace Snowball.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookAppService, BookAppService>();
+            services.Configure<ConnectionStringOptions>(Configuration.GetSection("DbConnection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
