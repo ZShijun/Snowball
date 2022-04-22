@@ -3,4 +3,4 @@ WORKDIR /app
 EXPOSE 80
 
 COPY . .
-ENTRYPOINT ["dotnet", "Snowball.dll"]
+ENTRYPOINT ["dotnet", "Snowball.Api.dll"]
