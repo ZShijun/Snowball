@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Snowball.Application;
 using Snowball.Domain.Bookshelf.Dtos;
 using System;
@@ -19,7 +20,17 @@ namespace Snowball.Api.Controllers
             this._bookAppService = bookAppService;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// 根据ID查询书籍
+        /// </summary>
+        /// <remarks>
+        /// 请求示例:
+        /// 
+        ///     1111111
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
         public Task<BookDto> GetAsync(int id)
         {
             return this._bookAppService.GetAsync(id);

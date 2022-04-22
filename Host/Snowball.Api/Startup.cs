@@ -1,21 +1,15 @@
-using AutoMapper;
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Snowball.Application;
 using Snowball.Core.Data;
 using Snowball.Domain.Bookshelf;
-using Snowball.Domain.Bookshelf.Repositories;
-using Snowball.Domain.Bookshelf.Services;
 using Snowball.Repositories.Bookshelf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Snowball.Api
 {
@@ -34,11 +28,23 @@ namespace Snowball.Api
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IBookService, BookService>();
-            services.AddScoped<IBookAppService, BookAppService>();
-            services.Configure<ConnectionStringOptions>(Configuration.GetSection("DbConnection"));
+            services.ConfigureMySql<ConnectionStringOption>(Configuration);
+
+            services.AddBookshelfRepository();
+            services.AddBookshelfDomain();
+            services.AddApplication();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Snowball API"
+                });
+                var basePath = AppDomain.CurrentDomain.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "Snowball.Api.xml");
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +54,13 @@ namespace Snowball.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Snowball API V1");
+            });
 
             app.UseRouting();
 

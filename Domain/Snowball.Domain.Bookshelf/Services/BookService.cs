@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Snowball.Domain.Bookshelf.Services
 {
-    public class BookService : IBookService
+    internal class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;

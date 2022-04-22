@@ -5,3 +5,5 @@
 **/bin
 **/obj
 **/.config
+**/logs
+/Host/Snowball.Api/Snowball.Api.xml
