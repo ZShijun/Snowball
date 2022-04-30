@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Snowball.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("v1/api/[controller]")]
     public class BookController : ControllerBase
     {
         private readonly IBookAppService _bookAppService;

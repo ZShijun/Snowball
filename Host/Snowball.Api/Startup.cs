@@ -10,6 +10,7 @@ using Snowball.Domain.Bookshelf;
 using Snowball.Repositories.Bookshelf;
 using System;
 using System.IO;
+using Snowball.Domain.Bookshelf.Dtos.Options;
 
 namespace Snowball.Api
 {
@@ -29,7 +30,7 @@ namespace Snowball.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.ConfigureMySql<ConnectionStringOption>(Configuration);
-
+            services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();
             services.AddBookshelfDomain();
             services.AddApplication();
