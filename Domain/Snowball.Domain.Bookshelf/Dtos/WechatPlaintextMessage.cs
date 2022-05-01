@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Snowball.Domain.Bookshelf.Dtos.Wechat
+﻿namespace Snowball.Domain.Bookshelf.Dtos
 {
     /// <summary>
     /// 明文消息
@@ -30,6 +26,8 @@ namespace Snowball.Domain.Bookshelf.Dtos.Wechat
         public string Event { get; set; }
 
         public string EventKey { get; set; }
+
+        public string Content { get; set; }
 
         public string CreateTime { get; set; }
     }

@@ -1,22 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Snowball.Domain.Bookshelf;
+using Snowball.Application;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace Snowball.Api.Controllers
 {
+    /// <summary>
+    /// 微信回调
+    /// </summary>
     [ApiController]
     [Route("v1/api/[controller]")]
     public class WechatController : ControllerBase
     {
-        private readonly IWechatService _wechatService;
+        private readonly IWechatAppService _wechatAppService;
         private readonly ILogger<WechatController> _logger;
 
-        public WechatController(IWechatService wechatService,
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="wechatAppService"></param>
+        /// <param name="logger"></param>
+        public WechatController(IWechatAppService wechatAppService,
                                 ILogger<WechatController> logger)
         {
-            this._wechatService = wechatService;
+            this._wechatAppService = wechatAppService;
             this._logger = logger;
         }
 
@@ -39,13 +47,13 @@ namespace Snowball.Api.Controllers
         [HttpGet]
         public ActionResult<string> Validation(string echoStr, string signature, string timestamp, string nonce)
         {
-            bool success = this._wechatService.CheckSignature(signature, timestamp, nonce);
+            bool success = this._wechatAppService.CheckSignature(signature, timestamp, nonce);
             if (success)
             {
-                return Content(echoStr);
+                return Ok(echoStr);
             }
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>
@@ -64,23 +72,22 @@ namespace Snowball.Api.Controllers
                                            [FromQuery(Name = "encrypt_type")] string encryptType,
                                            [FromQuery(Name = "msg_signature")] string msgSignature)
         {
-            bool success = this._wechatService.CheckSignature(signature, timestamp, nonce);
+            bool success = this._wechatAppService.CheckSignature(signature, timestamp, nonce);
             if (!success)
             {
-                return Ok( string.Empty);
+                return Ok();
             }
+
             string messageBody = await GetMessageBodyAsync(Request.Body);
-            var result = await this._wechatService.ReplyAsync(messageBody, encryptType, timestamp, nonce, msgSignature);
-            _logger.LogInformation("Result:" + result);
+            var result = await this._wechatAppService.ReplyAsync(messageBody, encryptType, timestamp, nonce, msgSignature);
+            this._logger.LogInformation("Replay:" + result);
             return Ok(result);
         }
 
         private Task<string> GetMessageBodyAsync(Stream body)
         {
-            using (var reader = new StreamReader(body))
-            {
-                return reader.ReadToEndAsync();
-            }
+            using var reader = new StreamReader(body);
+            return reader.ReadToEndAsync();
         }
     }
 }

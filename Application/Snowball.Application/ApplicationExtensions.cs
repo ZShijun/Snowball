@@ -6,7 +6,7 @@ namespace Snowball.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            return services.AddSingleton<IBookAppService, BookAppService>();
+            return services.AddSingleton<IWechatAppService, WechatAppService>();
         }
     }
 }
