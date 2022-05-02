@@ -25,8 +25,6 @@
         /// </summary>
         public string Event { get; set; }
 
-        public string EventKey { get; set; }
-
         public string Content { get; set; }
 
         public string CreateTime { get; set; }

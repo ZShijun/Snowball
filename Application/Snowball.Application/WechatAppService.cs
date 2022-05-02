@@ -81,7 +81,6 @@ namespace Snowball.Application
                         replay = this._wechatService.BuildDefaultReplayMessage(message.ToUserName, message.FromUserName);
                         break;
                 }
-
             }
             catch (BizException bizEx)
             {

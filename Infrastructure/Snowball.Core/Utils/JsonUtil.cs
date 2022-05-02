@@ -84,7 +84,7 @@ namespace Snowball.Core.Utils
 
             if (obj is string)
             {
-                return Deserialize<TResult>(obj + string.Empty);
+                return Deserialize<TResult>(obj.ToString());
             }
 
             string json = Serialize(obj, false);

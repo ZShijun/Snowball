@@ -94,7 +94,6 @@ namespace Snowball.Domain.Bookshelf.Services
                 ToUserName = GetElementValue(doc, "ToUserName"),
                 MsgType = GetElementValue(doc, "MsgType"),
                 Event = GetElementValue(doc, "Event"),
-                EventKey = GetElementValue(doc, "EventKey"),
                 Content = GetElementValue(doc, "Content"),
                 CreateTime = GetElementValue(doc, "CreateTime")
             };
@@ -127,7 +126,7 @@ namespace Snowball.Domain.Bookshelf.Services
             if (books == null
                 || !books.Any())
             {
-                return "这就尴尬了，没有你想要的书籍哦！";
+                return "这就尴尬了，没有你想要的书籍！";
             }
 
             StringBuilder content = new StringBuilder();
@@ -156,7 +155,7 @@ namespace Snowball.Domain.Bookshelf.Services
                 }
                 content.AppendLine();
             }
-            content.AppendLine("编辑发送“2:编号”就可以获取你想要的书籍下载链接啦!");
+            content.AppendLine("编辑发送【2:编号】就可以获取你想要的书籍下载链接啦!");
             content.AppendLine("记得要以“2:”开头哦！");
             return content.ToString();
         }
@@ -175,16 +174,16 @@ namespace Snowball.Domain.Bookshelf.Services
             }
 
             StringBuilder content = new StringBuilder();
-            content.AppendLine("拿走不谢，很高兴能够帮到您！");
             content.AppendLine($"下载地址：{book.DownloadUrl}");
             content.AppendLine($"提 取 码：{book.ExtractionCode}");
+            content.AppendLine("拿走不谢，祝您投资路上一片坦途！");
             return content.ToString();
         }
 
         public string BuildDefaultReplayMessage(string fromUser, string toUser)
         {
             StringBuilder content = new StringBuilder();
-            content.AppendLine("亲爱的投资者朋友，您的指令真的让我很为难，你可以尝试按如下形式发送指令：");
+            content.AppendLine("亲爱的投资者朋友，您的指令让我有些为难，你可以尝试如下形式：");
             content.AppendLine("1、【1:书籍名称】：按书籍名称搜索相关书籍，不记得全名也能搜索哦！");
             content.AppendLine("2、【2:书籍编号】：根据书籍编号，获取书籍下载地址，书籍编号可以通过【1:书籍名称】查询。");
             // content.AppendLine("0、【0:意见内容】：有好的意见或建议都可以通过该指令发送给我，感谢您的支持！");
