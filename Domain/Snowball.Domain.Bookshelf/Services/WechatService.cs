@@ -64,11 +64,6 @@ namespace Snowball.Domain.Bookshelf.Services
 
         private string GetElementValue(XDocument doc, string elementKey)
         {
-            if (doc == null)
-            {
-                return null;
-            }
-
             var element = doc.Root.Element(elementKey);
             if (element == null)
             {
@@ -85,7 +80,7 @@ namespace Snowball.Domain.Bookshelf.Services
             int msgLen = BitConverter.ToInt32(decryptedBuffer, 16);
             msgLen = IPAddress.NetworkToHostOrder(msgLen);
             string plaintext = Encoding.UTF8.GetString(decryptedBuffer, 20, msgLen);
-            this._logger.LogInformation("PlaintextMessage:" + JsonUtil.Serialize(plaintext));
+            this._logger.LogInformation("PlaintextMessage:" + plaintext);
             XDocument doc = XDocument.Parse(plaintext);
 
             return new WechatPlaintextMessage

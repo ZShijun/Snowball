@@ -42,7 +42,7 @@ namespace Snowball.Domain.Bookshelf.Services
 
             if (count > _fuzzySearchLimit)
             {
-                throw new BizException("大佬，您输入的关键词太简短了，太难找了...");
+                throw new BizException("大佬，多输入几个字吧，太难找了...");
             }
 
             var entities = await this._bookRepository.FuzzySearchByNameAsync(bookName);
