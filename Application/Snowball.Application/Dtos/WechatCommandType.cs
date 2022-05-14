@@ -1,4 +1,4 @@
-﻿namespace Snowball.Domain.Bookshelf.Dtos
+﻿namespace Snowball.Application.Dtos
 {
     public enum WechatCommandType
     {

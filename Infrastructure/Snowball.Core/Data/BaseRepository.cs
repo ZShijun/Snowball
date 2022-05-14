@@ -8,19 +8,16 @@ namespace Snowball.Core.Data
 {
     public abstract class BaseRepository
     {
-        protected ConnectionStringOption ConnectionStringOption { get; private set; }
-
         protected IDbConnectionFactory DbConnectionFactory { get; private set; }
 
-        public BaseRepository(IDbConnectionFactory dbConnectionFactory, IOptions<ConnectionStringOption> options)
+        public BaseRepository(IDbConnectionFactory dbConnectionFactory)
         {
             this.DbConnectionFactory = dbConnectionFactory;
-            this.ConnectionStringOption = options.Value;
         }
 
         public virtual IDbConnection CreateDbConnection()
         {
-            return this.DbConnectionFactory.CreateDbConnection(ConnectionStringOption.Default);
+            return this.DbConnectionFactory.CreateDbConnection();
         }
     }
 }

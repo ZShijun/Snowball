@@ -1,7 +1,4 @@
-﻿using Snowball.Bookshelf.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Snowball.Domain.Bookshelf.Dtos
 {

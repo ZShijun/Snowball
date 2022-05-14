@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NSubstitute;
-using Snowball.Bookshelf.Domain.Entities;
 using Snowball.Core;
+using Snowball.Domain.Bookshelf.Entities;
 using Snowball.Domain.Bookshelf.Profiles;
 using Snowball.Domain.Bookshelf.Repositories;
 using Snowball.Domain.Bookshelf.Services;

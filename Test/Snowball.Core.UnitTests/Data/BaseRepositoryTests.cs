@@ -12,14 +12,13 @@ namespace Snowball.Core.UnitTests.Data
         [Fact]
         public void CreateDbConnection_ShouldBeMySqlConnection_WhenGivenMySqlConnectionFactory()
         {
-            IOptions<ConnectionStringOption> options = Substitute.For<IOptions<ConnectionStringOption>>();
-            options.Value.Returns(new ConnectionStringOption
+            var option = new ConnectionStringOption
             {
                 Default = "server=127.0.0.1;database=test;uid=root;pwd=;"
-            });
+            };
 
-            IDbConnectionFactory connectionFactory = new MySqlConnectionFactory();
-            MockRepository mockRepository = new MockRepository(connectionFactory, options);
+            IDbConnectionFactory connectionFactory = new MySqlConnectionFactory(option);
+            MockRepository mockRepository = new MockRepository(connectionFactory);
             IDbConnection connection = mockRepository.CreateDbConnection();
             Assert.IsType<MySqlConnection>(connection);
         }
@@ -27,8 +26,8 @@ namespace Snowball.Core.UnitTests.Data
 
     public class MockRepository : BaseRepository
     {
-        public MockRepository(IDbConnectionFactory dbConnectionFactory, IOptions<ConnectionStringOption> options)
-            : base(dbConnectionFactory, options)
+        public MockRepository(IDbConnectionFactory dbConnectionFactory)
+            : base(dbConnectionFactory)
         {
         }
     }

@@ -5,12 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Snowball.Application;
-using Snowball.Core.Data;
 using Snowball.Domain.Bookshelf;
 using Snowball.Repositories.Bookshelf;
 using System;
 using System.IO;
 using Snowball.Domain.Bookshelf.Dtos.Options;
+using Snowball.Core;
+using Snowball.Core.Utils;
 
 namespace Snowball.Api
 {
@@ -28,8 +29,11 @@ namespace Snowball.Api
         {
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMySql(options=> {
+                options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
+            });
 
-            services.ConfigureMySql<ConnectionStringOption>(Configuration);
+            services.AddSingleton<TimeProvider, SystemTimeProvider>();
             services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();
             services.AddBookshelfDomain();

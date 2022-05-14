@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Snowball.Domain.Bookshelf.Dtos
+namespace Snowball.Application.Dtos
 {
     public class WechatCommand
     {

@@ -14,11 +14,15 @@ namespace Snowball.Domain.Bookshelf.Services
 {
     public class WechatService : IWechatService
     {
+        private readonly TimeProvider _timeProvider;
         private readonly WechatOption _wechatOption;
         private readonly ILogger<WechatService> _logger;
 
-        public WechatService(IOptions<WechatOption> options, ILogger<WechatService> logger)
+        public WechatService(TimeProvider timeProvider,
+                             IOptions<WechatOption> options,
+                             ILogger<WechatService> logger)
         {
+            this._timeProvider = timeProvider;
             this._wechatOption = options.Value;
             this._logger = logger;
         }
@@ -96,9 +100,16 @@ namespace Snowball.Domain.Bookshelf.Services
         #endregion
 
         #region 构造响应消息
-        public string BuildNormalTextMessage(string fromUser, string toUser, string content)
+        public string BuildNormalReplayMessage(string fromUser, string toUser, string content)
         {
-            long timestamp = DateTime.Now.ToSecondTimeStamp();
+            if (string.IsNullOrWhiteSpace(fromUser)
+                || string.IsNullOrWhiteSpace(toUser)
+                || string.IsNullOrWhiteSpace(content))
+            {
+                return string.Empty;
+            }
+
+            long timestamp = this._timeProvider.Now.ToSecondTimeStamp();
             StringBuilder templateBuilder = new StringBuilder();
             templateBuilder.Append("<xml>");
             templateBuilder.Append($"<ToUserName><![CDATA[{toUser}]]></ToUserName>");
@@ -110,10 +121,16 @@ namespace Snowball.Domain.Bookshelf.Services
             return templateBuilder.ToString();
         }
 
-        public string BuildSearchReplayTextMessage(string fromUser, string toUser, IEnumerable<BookDto> books)
+        public string BuildSearchReplayMessage(string fromUser, string toUser, IEnumerable<BookDto> books)
         {
+            if (string.IsNullOrWhiteSpace(fromUser)
+                   || string.IsNullOrWhiteSpace(toUser))
+            {
+                return string.Empty;
+            }
+
             string content = BuildSearchReplayContent(books);
-            return BuildNormalTextMessage(fromUser, toUser, content);
+            return BuildNormalReplayMessage(fromUser, toUser, content);
         }
 
         private string BuildSearchReplayContent(IEnumerable<BookDto> books)
@@ -151,14 +168,19 @@ namespace Snowball.Domain.Bookshelf.Services
                 content.AppendLine();
             }
             content.AppendLine("编辑发送【2:编号】就可以获取你想要的书籍下载链接啦!");
-            content.AppendLine("记得要以“2:”开头哦！");
             return content.ToString();
         }
 
-        public string BuildDownloadTextMessage(string fromUser, string toUser, BookDto book)
+        public string BuildDownloadReplayMessage(string fromUser, string toUser, BookDto book)
         {
+            if (string.IsNullOrWhiteSpace(fromUser)
+                      || string.IsNullOrWhiteSpace(toUser))
+            {
+                return string.Empty;
+            }
+
             string content = BuildDownloadContent(book);
-            return BuildNormalTextMessage(fromUser, toUser, content);
+            return BuildNormalReplayMessage(fromUser, toUser, content);
         }
 
         private string BuildDownloadContent(BookDto book)
@@ -177,13 +199,19 @@ namespace Snowball.Domain.Bookshelf.Services
 
         public string BuildDefaultReplayMessage(string fromUser, string toUser)
         {
+            if (string.IsNullOrWhiteSpace(fromUser)
+                      || string.IsNullOrWhiteSpace(toUser))
+            {
+                return string.Empty;
+            }
+
             StringBuilder content = new StringBuilder();
             content.AppendLine("亲爱的投资者朋友，您的指令让我有些为难，你可以尝试如下形式：");
             content.AppendLine("1、【1:书籍名称】：按书籍名称搜索相关书籍，不记得全名也能搜索哦！");
-            content.AppendLine("2、【2:书籍编号】：根据书籍编号，获取书籍下载地址，书籍编号可以通过【1:书籍名称】查询。");
-            // content.AppendLine("0、【0:意见内容】：有好的意见或建议都可以通过该指令发送给我，感谢您的支持！");
-            content.AppendLine("感谢您的支持，您的宝贵意见会让我变得更强！");
-            return BuildNormalTextMessage(fromUser, toUser, content.ToString());
+            content.AppendLine("2、【2:书籍编号】：根据书籍编号，获取书籍下载地址，书籍编号可以通过【1:书籍名称】查询！");
+            content.AppendLine("0、【0:意见建议】：有好的意见或建议都可以通过该指令发送给我，别太难为人哦！");
+            content.AppendLine("感谢您的支持，祝您买啥涨啥，每天都能跳着踢踏舞去工作！");
+            return BuildNormalReplayMessage(fromUser, toUser, content.ToString());
         }
         #endregion
     }

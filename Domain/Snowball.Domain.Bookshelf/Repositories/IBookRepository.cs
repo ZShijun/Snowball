@@ -1,4 +1,4 @@
-﻿using Snowball.Bookshelf.Domain.Entities;
+﻿using Snowball.Domain.Bookshelf.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

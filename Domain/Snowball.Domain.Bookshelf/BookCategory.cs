@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Snowball.Bookshelf.Domain
+namespace Snowball.Domain.Bookshelf
 {
     public enum BookCategory
     {

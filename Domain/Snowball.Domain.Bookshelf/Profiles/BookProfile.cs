@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Snowball.Bookshelf.Domain.Entities;
 using Snowball.Domain.Bookshelf.Dtos;
+using Snowball.Domain.Bookshelf.Entities;
 
 namespace Snowball.Domain.Bookshelf.Profiles
 {

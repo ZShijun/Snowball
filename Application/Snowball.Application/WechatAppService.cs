@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Snowball.Application.Dtos;
 using Snowball.Core;
 using Snowball.Domain.Bookshelf;
 using Snowball.Domain.Bookshelf.Dtos;
@@ -65,13 +66,13 @@ namespace Snowball.Application
                 {
                     case WechatCommandType.BookSearch:
                         var books = await this._bookService.FuzzySearchByNameAsync(command.Content);
-                        replay = this._wechatService.BuildSearchReplayTextMessage(message.ToUserName, message.FromUserName, books);
+                        replay = this._wechatService.BuildSearchReplayMessage(message.ToUserName, message.FromUserName, books);
                         break;
                     case WechatCommandType.Download:
                         if (int.TryParse(command.Content, out int bookId))
                         {
                             var book = await this._bookService.GetAsync(bookId);
-                            replay = this._wechatService.BuildDownloadTextMessage(message.ToUserName, message.FromUserName, book);
+                            replay = this._wechatService.BuildDownloadReplayMessage(message.ToUserName, message.FromUserName, book);
                         }
 
                         break;
@@ -84,7 +85,7 @@ namespace Snowball.Application
             }
             catch (BizException bizEx)
             {
-                replay = this._wechatService.BuildNormalTextMessage(message.ToUserName, message.FromUserName, bizEx.Message);
+                replay = this._wechatService.BuildNormalReplayMessage(message.ToUserName, message.FromUserName, bizEx.Message);
             }
 
             return replay;

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Snowball.Bookshelf.Domain.Entities
+namespace Snowball.Domain.Bookshelf.Entities
 {
     public class BookEntity
     {
