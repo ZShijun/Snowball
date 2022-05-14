@@ -7,8 +7,7 @@ namespace Snowball.Domain.Bookshelf
     {
         public static IServiceCollection AddBookshelfDomain(this IServiceCollection services)
         {
-            return services.AddSingleton<IBookService, BookService>()
-                .AddSingleton<IWechatService, WechatService>();
+            return services.AddSingleton<IBookService, BookService>();
         }
     }
 }

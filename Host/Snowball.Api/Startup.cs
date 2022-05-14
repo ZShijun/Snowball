@@ -9,9 +9,10 @@ using Snowball.Domain.Bookshelf;
 using Snowball.Repositories.Bookshelf;
 using System;
 using System.IO;
-using Snowball.Domain.Bookshelf.Dtos.Options;
 using Snowball.Core;
 using Snowball.Core.Utils;
+using Snowball.Domain.Wechat.Dtos;
+using Snowball.Domain.Wechat;
 
 namespace Snowball.Api
 {
@@ -37,6 +38,8 @@ namespace Snowball.Api
             services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();
             services.AddBookshelfDomain();
+
+            services.AddWechatDomain();
             services.AddApplication();
 
             services.AddSwaggerGen(c =>

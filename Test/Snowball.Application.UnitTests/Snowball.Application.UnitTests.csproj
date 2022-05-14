@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\Snowball.Core\Snowball.Core.csproj" />
+    <ProjectReference Include="..\..\Application\Snowball.Application\Snowball.Application.csproj" />
   </ItemGroup>
 
 </Project>

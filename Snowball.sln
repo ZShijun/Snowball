@@ -25,7 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Repositories.Books
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Core.UnitTests", "Test\Snowball.Core.UnitTests\Snowball.Core.UnitTests.csproj", "{1CAFD2C8-D31B-48A4-BF28-5E864028C05E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Domain.Bookshelf.UnitTests", "Test\Snowball.Domain.Bookshelf.UnitTests\Snowball.Domain.Bookshelf.UnitTests.csproj", "{AB431BA2-979E-4E8D-AF1A-554E5D923D2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Domain.Bookshelf.UnitTests", "Test\Snowball.Domain.Bookshelf.UnitTests\Snowball.Domain.Bookshelf.UnitTests.csproj", "{AB431BA2-979E-4E8D-AF1A-554E5D923D2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Domain.Wechat", "Domain\Snowball.Domain.Wechat\Snowball.Domain.Wechat.csproj", "{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Domain.Wechat.UnitTests", "Test\Snowball.Domain.Wechat.UnitTests\Snowball.Domain.Wechat.UnitTests.csproj", "{31443098-D734-4110-91C8-5737D32A9E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Application.UnitTests", "Test\Snowball.Application.UnitTests\Snowball.Application.UnitTests.csproj", "{6501C658-7298-44C2-8B35-9A74C7E27DF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +67,18 @@ Global
 		{AB431BA2-979E-4E8D-AF1A-554E5D923D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB431BA2-979E-4E8D-AF1A-554E5D923D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB431BA2-979E-4E8D-AF1A-554E5D923D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31443098-D734-4110-91C8-5737D32A9E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31443098-D734-4110-91C8-5737D32A9E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31443098-D734-4110-91C8-5737D32A9E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31443098-D734-4110-91C8-5737D32A9E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6501C658-7298-44C2-8B35-9A74C7E27DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6501C658-7298-44C2-8B35-9A74C7E27DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6501C658-7298-44C2-8B35-9A74C7E27DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6501C658-7298-44C2-8B35-9A74C7E27DF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +91,9 @@ Global
 		{F6358073-DCB3-4312-8193-19F2753BD151} = {F993AEE8-AD11-4225-8667-393871D97115}
 		{1CAFD2C8-D31B-48A4-BF28-5E864028C05E} = {A1D18490-278E-48FC-B86C-5F69F59A6C40}
 		{AB431BA2-979E-4E8D-AF1A-554E5D923D2C} = {A1D18490-278E-48FC-B86C-5F69F59A6C40}
+		{5D5E4E88-DD91-4DF0-A805-8727C4A516BC} = {3B9FA7D5-D944-4B67-95E7-A2EF46DFAB2B}
+		{31443098-D734-4110-91C8-5737D32A9E0D} = {A1D18490-278E-48FC-B86C-5F69F59A6C40}
+		{6501C658-7298-44C2-8B35-9A74C7E27DF8} = {A1D18490-278E-48FC-B86C-5F69F59A6C40}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA69CC55-7E5A-4513-8829-200D535293E2}

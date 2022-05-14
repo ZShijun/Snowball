@@ -3,7 +3,12 @@ using Snowball.Application.Dtos;
 using Snowball.Core;
 using Snowball.Domain.Bookshelf;
 using Snowball.Domain.Bookshelf.Dtos;
+using Snowball.Domain.Wechat;
+using Snowball.Domain.Wechat.Dtos;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Snowball.Application
@@ -15,7 +20,8 @@ namespace Snowball.Application
         private readonly ILogger<WechatAppService> _logger;
 
         public WechatAppService(IBookService bookService,
-                                IWechatService wechatService, ILogger<WechatAppService> logger)
+                                IWechatService wechatService,
+                                ILogger<WechatAppService> logger)
         {
             this._bookService = bookService;
             this._wechatService = wechatService;
@@ -65,16 +71,10 @@ namespace Snowball.Application
                 switch (command.CommandType)
                 {
                     case WechatCommandType.BookSearch:
-                        var books = await this._bookService.FuzzySearchByNameAsync(command.Content);
-                        replay = this._wechatService.BuildSearchReplayMessage(message.ToUserName, message.FromUserName, books);
+                        replay = await BuildSearchReplay(message.ToUserName, message.FromUserName, command.Content);
                         break;
                     case WechatCommandType.Download:
-                        if (int.TryParse(command.Content, out int bookId))
-                        {
-                            var book = await this._bookService.GetAsync(bookId);
-                            replay = this._wechatService.BuildDownloadReplayMessage(message.ToUserName, message.FromUserName, book);
-                        }
-
+                        replay = await BuildDownloadReplay(message.ToUserName, message.FromUserName, command.Content);
                         break;
                     case WechatCommandType.Advice:
                     case WechatCommandType.Unknow:
@@ -89,6 +89,77 @@ namespace Snowball.Application
             }
 
             return replay;
+        }
+
+        private async Task<string> BuildSearchReplay(string fromUser, string toUser, string searchKey)
+        {
+            var books = await this._bookService.FuzzySearchByNameAsync(searchKey);
+            string messageContent = BuildSearchReplayContent(books);
+            return this._wechatService.BuildNormalReplayMessage(fromUser, toUser, messageContent);
+        }
+
+        private string BuildSearchReplayContent(IEnumerable<BookDto> books)
+        {
+            if (books == null
+                || !books.Any())
+            {
+                return "尴尬了，没有你想要的书籍！";
+            }
+
+            StringBuilder content = new StringBuilder();
+            content.AppendLine("我们帮你找到了如下书籍：");
+            foreach (var book in books)
+            {
+                content.Append($"编　号：{book.Id}");
+                if (book.DoubanScore != 0)
+                {
+                    content.AppendLine($"\t评　分：{book.DoubanScore}");
+                }
+                else
+                {
+                    content.AppendLine();
+                }
+
+                content.AppendLine($"书　名：{book.Name}");
+                if (!string.IsNullOrWhiteSpace(book.OriginalName))
+                {
+                    content.AppendLine($"原书名：{book.OriginalName}");
+                }
+                content.AppendLine($"作　者：{book.Author}");
+                if (!string.IsNullOrWhiteSpace(book.Translator))
+                {
+                    content.AppendLine($"译　者：{book.Translator}");
+                }
+                content.AppendLine();
+            }
+            content.AppendLine("编辑发送【2:编号】就可以获取书籍下载链接啦!");
+            return content.ToString();
+        }
+
+        private async Task<string> BuildDownloadReplay(string fromUser, string toUser, string bookId)
+        {
+            if (!int.TryParse(bookId, out int id))
+            {
+                return string.Empty;
+            }
+
+            var book = await this._bookService.GetAsync(id);
+            string messageContent = BuildDownloadContent(book);
+            return this._wechatService.BuildNormalReplayMessage(fromUser, toUser, messageContent);
+        }
+
+        private string BuildDownloadContent(BookDto book)
+        {
+            if (book == null)
+            {
+                return "很遗憾，没有找到您想要的书籍！";
+            }
+
+            StringBuilder content = new StringBuilder();
+            content.AppendLine($"下载地址：{book.DownloadUrl}");
+            content.AppendLine($"提 取 码：{book.ExtractionCode}");
+            content.AppendLine("很高兴能帮到您，祝您投资路上一片坦途！");
+            return content.ToString();
         }
 
         /// <summary>

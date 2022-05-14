@@ -1,16 +1,13 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Snowball.Core.Utils;
-using Snowball.Domain.Bookshelf.Dtos;
-using Snowball.Domain.Bookshelf.Dtos.Options;
+using Snowball.Domain.Wechat.Dtos;
 using System;
+using System.Net;
 using System.Text;
 using System.Xml.Linq;
-using System.Net;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Snowball.Domain.Bookshelf.Services
+namespace Snowball.Domain.Wechat.Services
 {
     public class WechatService : IWechatService
     {
@@ -119,82 +116,6 @@ namespace Snowball.Domain.Bookshelf.Services
             templateBuilder.Append($"<Content><![CDATA[{content}]]></Content>");
             templateBuilder.Append("</xml>");
             return templateBuilder.ToString();
-        }
-
-        public string BuildSearchReplayMessage(string fromUser, string toUser, IEnumerable<BookDto> books)
-        {
-            if (string.IsNullOrWhiteSpace(fromUser)
-                   || string.IsNullOrWhiteSpace(toUser))
-            {
-                return string.Empty;
-            }
-
-            string content = BuildSearchReplayContent(books);
-            return BuildNormalReplayMessage(fromUser, toUser, content);
-        }
-
-        private string BuildSearchReplayContent(IEnumerable<BookDto> books)
-        {
-            if (books == null
-                || !books.Any())
-            {
-                return "尴尬了，没有你想要的书籍！";
-            }
-
-            StringBuilder content = new StringBuilder();
-            content.AppendLine("我们帮你找到了如下书籍：");
-            foreach (var book in books)
-            {
-                content.Append($"编　号：{book.Id}");
-                if (book.DoubanScore != 0)
-                {
-                    content.AppendLine($"\t评　分：{book.DoubanScore}");
-                }
-                else
-                {
-                    content.AppendLine();
-                }
-
-                content.AppendLine($"书　名：{book.Name}");
-                if (!string.IsNullOrWhiteSpace(book.OriginalName))
-                {
-                    content.AppendLine($"原书名：{book.OriginalName}");
-                }
-                content.AppendLine($"作　者：{book.Author}");
-                if (!string.IsNullOrWhiteSpace(book.Translator))
-                {
-                    content.AppendLine($"译　者：{book.Translator}");
-                }
-                content.AppendLine();
-            }
-            content.AppendLine("编辑发送【2:编号】就可以获取书籍下载链接啦!");
-            return content.ToString();
-        }
-
-        public string BuildDownloadReplayMessage(string fromUser, string toUser, BookDto book)
-        {
-            if (string.IsNullOrWhiteSpace(fromUser)
-                      || string.IsNullOrWhiteSpace(toUser))
-            {
-                return string.Empty;
-            }
-
-            string content = BuildDownloadContent(book);
-            return BuildNormalReplayMessage(fromUser, toUser, content);
-        }
-
-        private string BuildDownloadContent(BookDto book)
-        {
-            if (book == null)
-            {
-                return "很遗憾，没有找到您想要的书籍！";
-            }
-
-            StringBuilder content = new StringBuilder();
-            content.AppendLine($"下载地址：{book.DownloadUrl}");
-            content.AppendLine($"提 取 码：{book.ExtractionCode}");
-            content.AppendLine("很高兴能帮到您，祝您投资路上一片坦途！");
-            return content.ToString();
         }
 
         public string BuildDefaultReplayMessage(string fromUser, string toUser)

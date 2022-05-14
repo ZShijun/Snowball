@@ -1,4 +1,4 @@
-﻿namespace Snowball.Domain.Bookshelf.Dtos
+﻿namespace Snowball.Domain.Wechat.Dtos
 {
     /// <summary>
     /// 明文消息

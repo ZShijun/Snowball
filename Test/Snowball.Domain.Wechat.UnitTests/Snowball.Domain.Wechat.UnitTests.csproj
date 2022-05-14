@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\Snowball.Core\Snowball.Core.csproj" />
+    <ProjectReference Include="..\..\Domain\Snowball.Domain.Wechat\Snowball.Domain.Wechat.csproj" />
   </ItemGroup>
 
 </Project>
