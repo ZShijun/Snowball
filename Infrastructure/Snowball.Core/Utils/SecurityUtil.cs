@@ -103,7 +103,7 @@ namespace Snowball.Core.Utils
             aes.KeySize = 256;
             aes.BlockSize = 128;
             aes.Mode = CipherMode.CBC;
-            aes.Padding = PaddingMode.PKCS7;
+            aes.Padding = PaddingMode.None;
             aes.Key = key;
             aes.IV = iv;
             using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);

@@ -1,4 +1,5 @@
 ﻿using Snowball.Domain.Wechat.Dtos;
+using System.Threading.Tasks;
 
 namespace Snowball.Domain.Wechat
 {
@@ -53,5 +54,27 @@ namespace Snowball.Domain.Wechat
         /// <param name="toUser">接收方帐号（收到的OpenID）</param>
         /// <returns></returns>
         string BuildDefaultReplayMessage(string fromUser, string toUser);
+
+        /// <summary>
+        /// 添加建议
+        /// </summary>
+        /// <param name="dto">建议内容</param>
+        /// <returns></returns>
+        Task<bool> AddSuggestionAsync(WechatSuggestionDto dto);
+
+        /// <summary>
+        /// 订阅
+        /// </summary>
+        /// <param name="subscriber">订阅者(微信OpenId)</param>
+        /// <param name="provider">服务提供者(公众号原始ID)</param>
+        /// <returns></returns>
+        Task<bool> SubscribeAsync(string subscriber, string provider);
+
+        /// <summary>
+        /// 取消订阅
+        /// </summary>
+        /// <param name="subscriber">订阅者(微信OpenId)</param>
+        /// <returns></returns>
+        Task<bool> UnsubscribeAsync(string subscriber);
     }
 }

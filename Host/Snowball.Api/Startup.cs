@@ -13,6 +13,7 @@ using Snowball.Core;
 using Snowball.Core.Utils;
 using Snowball.Domain.Wechat.Dtos;
 using Snowball.Domain.Wechat;
+using Snowball.Repositories.Wechat;
 
 namespace Snowball.Api
 {
@@ -39,6 +40,7 @@ namespace Snowball.Api
             services.AddBookshelfRepository();
             services.AddBookshelfDomain();
 
+            services.AddWechatRepository();
             services.AddWechatDomain();
             services.AddApplication();
 

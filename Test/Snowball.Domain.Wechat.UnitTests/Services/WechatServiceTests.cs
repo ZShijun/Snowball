@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Snowball.Core.Utils;
 using Snowball.Domain.Wechat.Dtos;
+using Snowball.Domain.Wechat.Repositories;
 using Snowball.Domain.Wechat.Services;
 using System;
 using System.Collections.Generic;
@@ -142,6 +144,7 @@ namespace Snowball.Domain.Wechat.UnitTests.Services
 
         private IWechatService CreateWechatService()
         {
+            IWechatRepository wechatRepository = Substitute.For<IWechatRepository>();
             TimeProvider timeProvider = Substitute.For<TimeProvider>();
             timeProvider.Now.Returns(new DateTime(2022, 5, 14, 12, 28, 25));
             IOptions<WechatOption> options = Substitute.For<IOptions<WechatOption>>();
@@ -152,7 +155,8 @@ namespace Snowball.Domain.Wechat.UnitTests.Services
             });
 
             ILogger<WechatService> logger = Substitute.For<ILogger<WechatService>>();
-            return new WechatService(timeProvider, options, logger);
+            IMapper mapper = Substitute.For<IMapper>();
+            return new WechatService(wechatRepository, timeProvider, options, logger, mapper);
         }
     }
 }

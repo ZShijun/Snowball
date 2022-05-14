@@ -1,27 +1,37 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Snowball.Core.Utils;
 using Snowball.Domain.Wechat.Dtos;
+using Snowball.Domain.Wechat.Entities;
+using Snowball.Domain.Wechat.Repositories;
 using System;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Snowball.Domain.Wechat.Services
 {
     public class WechatService : IWechatService
     {
+        private readonly IWechatRepository _wechatRepository;
         private readonly TimeProvider _timeProvider;
         private readonly WechatOption _wechatOption;
         private readonly ILogger<WechatService> _logger;
+        private readonly IMapper _mapper;
 
-        public WechatService(TimeProvider timeProvider,
+        public WechatService(IWechatRepository wechatRepository,
+                             TimeProvider timeProvider,
                              IOptions<WechatOption> options,
-                             ILogger<WechatService> logger)
+                             ILogger<WechatService> logger,
+                             IMapper mapper)
         {
+            this._wechatRepository = wechatRepository;
             this._timeProvider = timeProvider;
             this._wechatOption = options.Value;
             this._logger = logger;
+            this._mapper = mapper;
         }
 
         #region 签名校验
@@ -135,5 +145,36 @@ namespace Snowball.Domain.Wechat.Services
             return BuildNormalReplayMessage(fromUser, toUser, content.ToString());
         }
         #endregion
+
+        public async Task<bool> AddSuggestionAsync(WechatSuggestionDto dto)
+        {
+            if (dto == null)
+            {
+                return false;
+            }
+
+            var entity = this._mapper.Map<WechatSuggestionEntity>(dto);
+            return await this._wechatRepository.AddSuggestionAsync(entity);
+        }
+
+        public async Task<bool> SubscribeAsync(string subscriber, string provider)
+        {
+            bool exists = await this._wechatRepository.ExistsSubscriptionAsync(subscriber);
+            if (exists)
+            {
+                return true;
+            }
+
+            return await this._wechatRepository.AddSubscriptionAsync(new WechatSubscriptionEntity
+            {
+                Subscriber = subscriber,
+                Provider = provider
+            });
+        }
+
+        public Task<bool> UnsubscribeAsync(string subscriber)
+        {
+            return this._wechatRepository.RemoveSubscriptionAsync(subscriber);
+        }
     }
 }

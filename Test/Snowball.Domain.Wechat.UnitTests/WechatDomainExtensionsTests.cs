@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Snowball.Core.Utils;
 using Snowball.Domain.Wechat.Dtos;
+using Snowball.Domain.Wechat.Repositories;
 using Snowball.Domain.Wechat.Services;
 using System;
 using System.Collections.Generic;
@@ -26,9 +28,12 @@ namespace Snowball.Domain.Wechat.UnitTests
         private IServiceCollection CreateServiceCollection()
         {
             IServiceCollection services = new ServiceCollection();
-            return services.AddSingleton(Substitute.For<TimeProvider>())
-            .AddSingleton(Substitute.For<IOptions<WechatOption>>())
-            .AddSingleton(Substitute.For<ILogger<WechatService>>());
+            return services
+                .AddSingleton(Substitute.For<IWechatRepository>())
+                .AddSingleton(Substitute.For<IMapper>())
+                .AddSingleton(Substitute.For<TimeProvider>())
+                .AddSingleton(Substitute.For<IOptions<WechatOption>>())
+                .AddSingleton(Substitute.For<ILogger<WechatService>>());
         }
     }
 }
