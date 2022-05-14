@@ -146,7 +146,7 @@ namespace Snowball.Domain.Bookshelf.UnitTests.Services
         {
             IWechatService wechatService = CreateWechatService();
             var actual = wechatService.BuildSearchReplayMessage("fromUser", "toUser", null);
-            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[这就尴尬了，没有你想要的书籍！]]></Content></xml>";
+            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[尴尬了，没有你想要的书籍！]]></Content></xml>";
             Assert.Equal(expected, actual);
         }
 
@@ -156,7 +156,7 @@ namespace Snowball.Domain.Bookshelf.UnitTests.Services
             IWechatService wechatService = CreateWechatService();
             var books = new List<BookDto>();
             var actual = wechatService.BuildSearchReplayMessage("fromUser", "toUser", books);
-            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[这就尴尬了，没有你想要的书籍！]]></Content></xml>";
+            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[尴尬了，没有你想要的书籍！]]></Content></xml>";
             Assert.Equal(expected, actual);
         }
 
@@ -183,7 +183,7 @@ namespace Snowball.Domain.Bookshelf.UnitTests.Services
                 }
             };
             var actual = wechatService.BuildSearchReplayMessage("fromUser", "toUser", books);
-            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[我们帮你找到了如下书籍：\r\n编　号：10001\t评　分：8.9\r\n书　名：聪明的投资者\r\n原书名：The intelligent investor\r\n作　者：本杰明·格雷厄姆\r\n译　者：王中华 / 黄一义\r\n\r\n编　号：10002\r\n书　名：投资最重要的事\r\n作　者：霍华德·马克斯\r\n\r\n编辑发送【2:编号】就可以获取你想要的书籍下载链接啦!\r\n]]></Content></xml>";
+            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[我们帮你找到了如下书籍：\r\n编　号：10001\t评　分：8.9\r\n书　名：聪明的投资者\r\n原书名：The intelligent investor\r\n作　者：本杰明·格雷厄姆\r\n译　者：王中华 / 黄一义\r\n\r\n编　号：10002\r\n书　名：投资最重要的事\r\n作　者：霍华德·马克斯\r\n\r\n编辑发送【2:编号】就可以获取书籍下载链接啦!\r\n]]></Content></xml>";
             Assert.Equal(expected, actual);
         }
 
@@ -211,7 +211,7 @@ namespace Snowball.Domain.Bookshelf.UnitTests.Services
         {
             IWechatService wechatService = CreateWechatService();
             var actual = wechatService.BuildDownloadReplayMessage("fromUser", "toUser", null);
-            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[很抱歉，没有找到您想要的书籍！]]></Content></xml>";
+            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[很遗憾，没有找到您想要的书籍！]]></Content></xml>";
             Assert.Equal(expected, actual);
         }
 
@@ -226,7 +226,7 @@ namespace Snowball.Domain.Bookshelf.UnitTests.Services
                 ExtractionCode = "ExtractionCode"
             };
             var actual = wechatService.BuildDownloadReplayMessage("fromUser", "toUser", book);
-            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[下载地址：DownloadUrl\r\n提 取 码：ExtractionCode\r\n拿走不谢，祝您投资路上一片坦途！\r\n]]></Content></xml>";
+            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[下载地址：DownloadUrl\r\n提 取 码：ExtractionCode\r\n很高兴能帮到您，祝您投资路上一片坦途！\r\n]]></Content></xml>";
             Assert.Equal(expected, actual);
         }
 
@@ -249,7 +249,7 @@ namespace Snowball.Domain.Bookshelf.UnitTests.Services
         {
             IWechatService wechatService = CreateWechatService();
             var actual = wechatService.BuildDefaultReplayMessage("fromUser", "toUser");
-            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[亲爱的投资者朋友，您的指令让我有些为难，你可以尝试如下形式：\r\n1、【1:书籍名称】：按书籍名称搜索相关书籍，不记得全名也能搜索哦！\r\n2、【2:书籍编号】：根据书籍编号，获取书籍下载地址，书籍编号可以通过【1:书籍名称】查询！\r\n0、【0:意见建议】：有好的意见或建议都可以通过该指令发送给我，别太难为人哦！\r\n感谢您的支持，祝您买啥涨啥，每天都能跳着踢踏舞去工作！\r\n]]></Content></xml>";
+            string expected = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1652502505</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[您的指令让我有些为难，你可以尝试如下形式：\r\n1、【1:书籍名称】：按书籍名称搜索相关书籍，不记得全名也能搜哦！\r\n2、【2:书籍编号】：获取书籍下载地址，编号可以通过【1:书籍名称】查询！\r\n0、【0:强烈建议】：别太难为人哦！\r\n祝您生活愉快，每天都能跳着踢踏舞去工作！\r\n]]></Content></xml>";
             Assert.Equal(expected, actual);
         }
 

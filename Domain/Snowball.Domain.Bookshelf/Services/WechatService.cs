@@ -138,7 +138,7 @@ namespace Snowball.Domain.Bookshelf.Services
             if (books == null
                 || !books.Any())
             {
-                return "这就尴尬了，没有你想要的书籍！";
+                return "尴尬了，没有你想要的书籍！";
             }
 
             StringBuilder content = new StringBuilder();
@@ -167,7 +167,7 @@ namespace Snowball.Domain.Bookshelf.Services
                 }
                 content.AppendLine();
             }
-            content.AppendLine("编辑发送【2:编号】就可以获取你想要的书籍下载链接啦!");
+            content.AppendLine("编辑发送【2:编号】就可以获取书籍下载链接啦!");
             return content.ToString();
         }
 
@@ -187,13 +187,13 @@ namespace Snowball.Domain.Bookshelf.Services
         {
             if (book == null)
             {
-                return "很抱歉，没有找到您想要的书籍！";
+                return "很遗憾，没有找到您想要的书籍！";
             }
 
             StringBuilder content = new StringBuilder();
             content.AppendLine($"下载地址：{book.DownloadUrl}");
             content.AppendLine($"提 取 码：{book.ExtractionCode}");
-            content.AppendLine("拿走不谢，祝您投资路上一片坦途！");
+            content.AppendLine("很高兴能帮到您，祝您投资路上一片坦途！");
             return content.ToString();
         }
 
@@ -206,11 +206,11 @@ namespace Snowball.Domain.Bookshelf.Services
             }
 
             StringBuilder content = new StringBuilder();
-            content.AppendLine("亲爱的投资者朋友，您的指令让我有些为难，你可以尝试如下形式：");
-            content.AppendLine("1、【1:书籍名称】：按书籍名称搜索相关书籍，不记得全名也能搜索哦！");
-            content.AppendLine("2、【2:书籍编号】：根据书籍编号，获取书籍下载地址，书籍编号可以通过【1:书籍名称】查询！");
-            content.AppendLine("0、【0:意见建议】：有好的意见或建议都可以通过该指令发送给我，别太难为人哦！");
-            content.AppendLine("感谢您的支持，祝您买啥涨啥，每天都能跳着踢踏舞去工作！");
+            content.AppendLine("您的指令让我有些为难，你可以尝试如下形式：");
+            content.AppendLine("1、【1:书籍名称】：按书籍名称搜索相关书籍，不记得全名也能搜哦！");
+            content.AppendLine("2、【2:书籍编号】：获取书籍下载地址，编号可以通过【1:书籍名称】查询！");
+            content.AppendLine("0、【0:强烈建议】：别太难为人哦！");
+            content.AppendLine("祝您生活愉快，每天都能跳着踢踏舞去工作！");
             return BuildNormalReplayMessage(fromUser, toUser, content.ToString());
         }
         #endregion
