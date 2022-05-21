@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/index-valuation/index",
+    "pages/market-sentiment/index"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#707070",
+    "selectedColor": "#fcc21b",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index-valuation/index",
+        "text": "指数估值"
+      },
+      {
+        "pagePath": "pages/market-sentiment/index",
+        "text": "市场情绪"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "投资慢慢来",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
