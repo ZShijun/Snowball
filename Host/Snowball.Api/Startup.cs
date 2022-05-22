@@ -14,6 +14,8 @@ using Snowball.Core.Utils;
 using Snowball.Domain.Wechat.Dtos;
 using Snowball.Domain.Wechat;
 using Snowball.Repositories.Wechat;
+using Snowball.Domain.Stock;
+using Snowball.Repositories.Stock;
 
 namespace Snowball.Api
 {
@@ -35,15 +37,22 @@ namespace Snowball.Api
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
 
+            services.AddHttpClient("danjuanfunds", conf =>
+            {
+                conf.BaseAddress = new Uri("https://danjuanfunds.com/");
+            });
+
             services.AddSingleton<TimeProvider, SystemTimeProvider>();
             services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();
             services.AddBookshelfDomain();
-
             services.AddWechatRepository();
             services.AddWechatDomain();
-            services.AddApplication();
+            services.AddStockRepository();
+            services.AddStockDomain();
 
+            services.AddApplication();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

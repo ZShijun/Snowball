@@ -27,13 +27,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Core.UnitTests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Domain.Bookshelf.UnitTests", "Test\Snowball.Domain.Bookshelf.UnitTests\Snowball.Domain.Bookshelf.UnitTests.csproj", "{AB431BA2-979E-4E8D-AF1A-554E5D923D2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Domain.Wechat", "Domain\Snowball.Domain.Wechat\Snowball.Domain.Wechat.csproj", "{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Domain.Wechat", "Domain\Snowball.Domain.Wechat\Snowball.Domain.Wechat.csproj", "{5D5E4E88-DD91-4DF0-A805-8727C4A516BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Domain.Wechat.UnitTests", "Test\Snowball.Domain.Wechat.UnitTests\Snowball.Domain.Wechat.UnitTests.csproj", "{31443098-D734-4110-91C8-5737D32A9E0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Domain.Wechat.UnitTests", "Test\Snowball.Domain.Wechat.UnitTests\Snowball.Domain.Wechat.UnitTests.csproj", "{31443098-D734-4110-91C8-5737D32A9E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Application.UnitTests", "Test\Snowball.Application.UnitTests\Snowball.Application.UnitTests.csproj", "{6501C658-7298-44C2-8B35-9A74C7E27DF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Application.UnitTests", "Test\Snowball.Application.UnitTests\Snowball.Application.UnitTests.csproj", "{6501C658-7298-44C2-8B35-9A74C7E27DF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Repositories.Wechat", "Infrastructure\Snowball.Repositories.Wechat\Snowball.Repositories.Wechat.csproj", "{BC01C353-19AC-4D1D-9E74-31F751584B27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snowball.Repositories.Wechat", "Infrastructure\Snowball.Repositories.Wechat\Snowball.Repositories.Wechat.csproj", "{BC01C353-19AC-4D1D-9E74-31F751584B27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Domain.Stock", "Domain\Snowball.Domain.Stock\Snowball.Domain.Stock.csproj", "{B207A7A4-DF3C-4391-86E6-314237C9EA5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Repositories.Stock", "Infrastructure\Snowball.Repositories.Stock\Snowball.Repositories.Stock.csproj", "{FEF5E102-7260-4096-8BED-503D0613EB0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +89,14 @@ Global
 		{BC01C353-19AC-4D1D-9E74-31F751584B27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC01C353-19AC-4D1D-9E74-31F751584B27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC01C353-19AC-4D1D-9E74-31F751584B27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B207A7A4-DF3C-4391-86E6-314237C9EA5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B207A7A4-DF3C-4391-86E6-314237C9EA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B207A7A4-DF3C-4391-86E6-314237C9EA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B207A7A4-DF3C-4391-86E6-314237C9EA5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEF5E102-7260-4096-8BED-503D0613EB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEF5E102-7260-4096-8BED-503D0613EB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEF5E102-7260-4096-8BED-503D0613EB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEF5E102-7260-4096-8BED-503D0613EB0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +113,8 @@ Global
 		{31443098-D734-4110-91C8-5737D32A9E0D} = {A1D18490-278E-48FC-B86C-5F69F59A6C40}
 		{6501C658-7298-44C2-8B35-9A74C7E27DF8} = {A1D18490-278E-48FC-B86C-5F69F59A6C40}
 		{BC01C353-19AC-4D1D-9E74-31F751584B27} = {F993AEE8-AD11-4225-8667-393871D97115}
+		{B207A7A4-DF3C-4391-86E6-314237C9EA5E} = {3B9FA7D5-D944-4B67-95E7-A2EF46DFAB2B}
+		{FEF5E102-7260-4096-8BED-503D0613EB0C} = {F993AEE8-AD11-4225-8667-393871D97115}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA69CC55-7E5A-4513-8829-200D535293E2}

@@ -18,7 +18,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Snowball.Application\Snowball.Application.csproj" />
+    <ProjectReference Include="..\..\Domain\Snowball.Domain.Stock\Snowball.Domain.Stock.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Snowball.Repositories.Bookshelf\Snowball.Repositories.Bookshelf.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Snowball.Repositories.Stock\Snowball.Repositories.Stock.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Snowball.Repositories.Wechat\Snowball.Repositories.Wechat.csproj" />
   </ItemGroup>
 
