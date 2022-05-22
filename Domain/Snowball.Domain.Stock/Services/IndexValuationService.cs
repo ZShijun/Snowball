@@ -33,6 +33,7 @@ namespace Snowball.Domain.Stock.Services
 
             return entities.Select(e => new IndexValuationDto
             {
+                Code = e.Code,
                 DividendYield = e.DividendYield,
                 PB = e.PB,
                 PBPercentile = e.PBPercentile,

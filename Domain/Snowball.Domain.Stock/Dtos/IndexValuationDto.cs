@@ -7,6 +7,11 @@ namespace Snowball.Domain.Stock.Dtos
     public class IndexValuationDto
     {
         /// <summary>
+        /// 指数编码
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
         /// 指数标题
         /// </summary>
         public string Title { get; set; }
