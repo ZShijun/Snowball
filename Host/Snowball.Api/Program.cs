@@ -4,6 +4,7 @@ using Serilog;
 using Serilog.Events;
 using System;
 using System.IO;
+using System.Net;
 
 namespace Snowball.Api
 {
@@ -40,7 +41,8 @@ namespace Snowball.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    var assemblyName = typeof(Program).Assembly.FullName;
+                    webBuilder.UseStartup(assemblyName);
                 })
                 .UseSerilog();
     }

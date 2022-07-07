@@ -24,32 +24,32 @@ namespace Snowball.Domain.Stock.Dtos
         /// <summary>
         /// 市盈率
         /// </summary>
-        public decimal PE { get; set; }
+        public string PE { get; set; }
 
         /// <summary>
         /// 市盈率百分位
         /// </summary>
-        public decimal PEPercentile { get; set; }
+        public string PEPercentile { get; set; }
 
         /// <summary>
         /// 市净率
         /// </summary>
-        public decimal PB { get; set; }
+        public string PB { get; set; }
 
         /// <summary>
         /// 市净率百分位
         /// </summary>
-        public decimal PBPercentile { get; set; }
+        public string PBPercentile { get; set; }
 
         /// <summary>
         /// 净资产收益率
         /// </summary>
-        public decimal ROE { get; set; }
+        public string ROE { get; set; }
 
         /// <summary>
         /// 股息率
         /// </summary>
-        public decimal DividendYield { get; set; }
+        public string DividendYield { get; set; }
 
         /// <summary>
         /// 估值水平

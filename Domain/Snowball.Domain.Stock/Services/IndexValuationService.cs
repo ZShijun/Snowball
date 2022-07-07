@@ -34,17 +34,22 @@ namespace Snowball.Domain.Stock.Services
             return entities.Select(e => new IndexValuationDto
             {
                 Code = e.Code,
-                DividendYield = e.DividendYield,
-                PB = e.PB,
-                PBPercentile = e.PBPercentile,
-                PE = e.PE,
-                PEPercentile = e.PEPercentile,
-                ROE = e.ROE,
+                DividendYield = FormatDecimal(e.DividendYield * 100),
+                PB = FormatDecimal(e.PB),
+                PBPercentile = FormatDecimal(e.PBPercentile * 100),
+                PE = FormatDecimal(e.PE),
+                PEPercentile = FormatDecimal(e.PEPercentile * 100),
+                ROE = FormatDecimal(e.ROE * 100),
                 Style = e.Style,
                 Title = e.Title,
                 ValuationLevel = GetValuationLevel(e)
             }).OrderBy(dto => dto.ValuationLevel)
             .ThenBy(dto => dto.PEPercentile);
+        }
+
+        private string FormatDecimal(decimal d)
+        {
+            return d.ToString("0.00");
         }
 
         private int GetValuationLevel(IndexValuationEntity entity)

@@ -1,27 +1,26 @@
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Snowball.Application;
-using Snowball.Domain.Bookshelf;
-using Snowball.Repositories.Bookshelf;
-using System;
-using System.IO;
 using Snowball.Core;
 using Snowball.Core.Utils;
-using Snowball.Domain.Wechat.Dtos;
-using Snowball.Domain.Wechat;
-using Snowball.Repositories.Wechat;
+using Snowball.Domain.Bookshelf;
 using Snowball.Domain.Stock;
+using Snowball.Domain.Wechat;
+using Snowball.Domain.Wechat.Dtos;
+using Snowball.Repositories.Bookshelf;
 using Snowball.Repositories.Stock;
+using Snowball.Repositories.Wechat;
+using System;
+using System.IO;
 
 namespace Snowball.Api
 {
-    public class Startup
+    public class StartupDevelopment
     {
-        public Startup(IConfiguration configuration)
+        public StartupDevelopment(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -33,15 +32,19 @@ namespace Snowball.Api
         {
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddMySql(options=> {
+            services.AddMySql(options => {
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
-
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
             services.AddHttpClient("danjuanfunds", conf =>
             {
                 conf.BaseAddress = new Uri("https://danjuanfunds.com/");
             });
-
+           
             services.AddSingleton<TimeProvider, SystemTimeProvider>();
             services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();
@@ -52,7 +55,7 @@ namespace Snowball.Api
             services.AddStockDomain();
 
             services.AddApplication();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -67,19 +70,18 @@ namespace Snowball.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseDeveloperExceptionPage();
+            
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Snowball API V1");
             });
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
