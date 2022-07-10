@@ -1,4 +1,5 @@
-﻿using Snowball.Domain.Stock;
+﻿using Snowball.Application.Dtos;
+using Snowball.Domain.Stock;
 using Snowball.Domain.Stock.Dtos;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,15 @@ namespace Snowball.Application
             this._indexValuationService = indexValuationService;
         }
 
-        public Task<IEnumerable<IndexValuationDto>> GetAllAsync()
+        public async Task<IndexValuationOutputDto> GetAllAsync()
         {
-            return this._indexValuationService.GetAllAsync();
+            var lastUpdateTime = await this._indexValuationService.GetLastUpdateTimeAsync();
+            var valuations = await this._indexValuationService.GetAllAsync();
+            return new IndexValuationOutputDto
+            {
+                LastUpdateTime = lastUpdateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                Valuations = valuations
+            };
         }
     }
 }

@@ -42,6 +42,11 @@ namespace Snowball.Domain.Stock.Dtos
         public string PBPercentile { get; set; }
 
         /// <summary>
+        /// 市盈率/市净率合并后的百分位
+        /// </summary>
+        public decimal Percentile { get; set; }
+
+        /// <summary>
         /// 净资产收益率
         /// </summary>
         public string ROE { get; set; }
@@ -52,13 +57,29 @@ namespace Snowball.Domain.Stock.Dtos
         public string DividendYield { get; set; }
 
         /// <summary>
-        /// 估值水平
-        ///     1:严重低估[0-15),
-        ///     2:低估[15-35)
-        ///     3:适中[35-65],
-        ///     4:高估(65-85],
-        ///     5:严重高估(85-100]
+        /// 估值水平颜色
         /// </summary>
-        public int ValuationLevel { get; set; }
+        public string ValuationColor
+        {
+            get
+            {
+                int red = 0XFF;
+                int green = 0XFF;
+                if (this.Percentile <= 50)
+                {
+                    red = (int)(red * this.Percentile / 50);
+                }
+                else if(this.Percentile <= 100)
+                {
+                    green = (int)(green * (100 - this.Percentile) / 50);
+                }
+                else
+                {
+                    return "#FFF";
+                }
+
+                return $"#{red:X2}{green:X2}00";
+            }
+        }
     }
 }

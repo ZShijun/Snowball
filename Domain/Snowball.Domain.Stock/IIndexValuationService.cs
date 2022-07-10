@@ -1,7 +1,6 @@
 ﻿using Snowball.Domain.Stock.Dtos;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Snowball.Domain.Stock
@@ -13,5 +12,7 @@ namespace Snowball.Domain.Stock
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<IndexValuationDto>> GetAllAsync();
+
+        Task<DateTime> GetLastUpdateTimeAsync();
     }
 }

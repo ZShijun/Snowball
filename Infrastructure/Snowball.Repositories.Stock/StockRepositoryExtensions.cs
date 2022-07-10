@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Snowball.Domain.Stock.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Snowball.Repositories.Stock
 {
@@ -10,7 +7,9 @@ namespace Snowball.Repositories.Stock
     {
         public static IServiceCollection AddStockRepository(this IServiceCollection services)
         {
-            return services.AddSingleton<IIndexValuationRepository, IndexValuationRepository>();
+            return services
+                .AddSingleton<IIndexValuationRepository, IndexValuationRepository>()
+                .AddSingleton<IUpdatePointRepository, UpdatePointRepository>();
         }
     }
 }

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Snowball.Domain.Stock.Services
@@ -15,10 +14,14 @@ namespace Snowball.Domain.Stock.Services
     public class IndexValuationService : IIndexValuationService
     {
         private readonly IIndexValuationRepository _indexValuationRepository;
+        private readonly IUpdatePointRepository _updatePointRepository;
         private readonly IHttpClientFactory _clientFactory;
-        public IndexValuationService(IIndexValuationRepository indexValuationRepository, IHttpClientFactory clientFactory)
+        public IndexValuationService(IIndexValuationRepository indexValuationRepository,
+                                     IUpdatePointRepository updatePointRepository,
+                                     IHttpClientFactory clientFactory)
         {
             this._indexValuationRepository = indexValuationRepository;
+            this._updatePointRepository = updatePointRepository;
             this._clientFactory = clientFactory;
         }
 
@@ -42,9 +45,10 @@ namespace Snowball.Domain.Stock.Services
                 ROE = FormatDecimal(e.ROE * 100),
                 Style = e.Style,
                 Title = e.Title,
-                ValuationLevel = GetValuationLevel(e)
-            }).OrderBy(dto => dto.ValuationLevel)
-            .ThenBy(dto => dto.PEPercentile);
+                Percentile = GetPercentile(e)
+            })
+            .OrderBy(dto => dto.Percentile)
+            .ToList();
         }
 
         private string FormatDecimal(decimal d)
@@ -52,8 +56,13 @@ namespace Snowball.Domain.Stock.Services
             return d.ToString("0.00");
         }
 
-        private int GetValuationLevel(IndexValuationEntity entity)
+        private decimal GetPercentile(IndexValuationEntity entity)
         {
+            if (entity.PreparationTime.AddYears(5) > DateTime.Now)
+            {// 指数编制时间小于5年，不参与估值预测
+                return 101;
+            }
+
             decimal percentage;
             if (entity.UsePB)
             {
@@ -64,34 +73,14 @@ namespace Snowball.Domain.Stock.Services
                 percentage = entity.PEPercentile * 100;
             }
 
-            return PercentageToLevel(percentage);
+            return percentage;
         }
-        
-        private int PercentageToLevel(decimal percentage)
-        {
-            int level;
-            if (percentage < 15)
-            {
-                level = 1;
-            }
-            else if (percentage < 35)
-            {
-                level = 2;
-            }
-            else if (percentage <= 65)
-            {
-                level = 3;
-            }
-            else if (percentage <= 85)
-            {
-                level = 4;
-            }
-            else
-            {
-                level = 5;
-            }
 
-            return level;
+        public async Task<DateTime> GetLastUpdateTimeAsync()
+        {
+            const string key = "IndexValuation";
+            var entity = await this._updatePointRepository.GetAsync(key);
+            return entity.UpdateTime;
         }
 
         private async Task CrawlingIndexValuation()

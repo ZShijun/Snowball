@@ -35,11 +35,7 @@ namespace Snowball.Api
             services.AddMySql(options => {
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-                options.HttpsPort = 5001;
-            });
+            
             services.AddHttpClient("danjuanfunds", conf =>
             {
                 conf.BaseAddress = new Uri("https://danjuanfunds.com/");
@@ -80,8 +76,6 @@ namespace Snowball.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Snowball API V1");
             });
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

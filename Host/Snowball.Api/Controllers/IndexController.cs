@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Snowball.Application;
+using Snowball.Application.Dtos;
 using Snowball.Domain.Stock;
-using Snowball.Domain.Stock.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Snowball.Api.Controllers
@@ -15,11 +13,11 @@ namespace Snowball.Api.Controllers
     [Route("v1/api/[controller]")]
     public class IndexController : ControllerBase
     {
-        private readonly IIndexValuationService _indexValuationService;
+        private readonly IStockAppService _stockAppService;
 
-        public IndexController(IIndexValuationService indexValuationService)
+        public IndexController(IStockAppService stockAppService)
         {
-            this._indexValuationService = indexValuationService;
+            this._stockAppService = stockAppService;
         }
 
         /// <summary>
@@ -27,10 +25,10 @@ namespace Snowball.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IndexValuationDto>>> GetAllAsync()
+        public async Task<ActionResult<IndexValuationOutputDto>> GetAllAsync()
         {
-            var dtos = await this._indexValuationService.GetAllAsync();
-            return Ok(dtos);
+            var output = await this._stockAppService.GetAllAsync();
+            return Ok(output);
         }
     }
 }
