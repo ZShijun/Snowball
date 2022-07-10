@@ -10,6 +10,8 @@ namespace Snowball.Domain.Stock.Repositories
     {
         Task<bool> InsertAsync(IndexValuationEntity entity);
 
+        Task<bool> UpdateAsync(IndexValuationEntity entity);
+
         /// <summary>
         /// 查询所有估值数据
         /// </summary>

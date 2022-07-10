@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Snowball.Core;
 using Snowball.Core.Utils;
 using Snowball.Domain.Stock.Dtos;
 using Snowball.Domain.Stock.Entities;
@@ -15,14 +16,15 @@ namespace Snowball.Domain.Stock.Services
     {
         private readonly IIndexValuationRepository _indexValuationRepository;
         private readonly IUpdatePointRepository _updatePointRepository;
-        private readonly IHttpClientFactory _clientFactory;
+        private readonly TimeProvider _timeProvider;
+
         public IndexValuationService(IIndexValuationRepository indexValuationRepository,
                                      IUpdatePointRepository updatePointRepository,
-                                     IHttpClientFactory clientFactory)
+                                     TimeProvider timeProvider)
         {
             this._indexValuationRepository = indexValuationRepository;
             this._updatePointRepository = updatePointRepository;
-            this._clientFactory = clientFactory;
+            this._timeProvider = timeProvider;
         }
 
         public async Task<IEnumerable<IndexValuationDto>> GetAllAsync()
@@ -58,7 +60,7 @@ namespace Snowball.Domain.Stock.Services
 
         private decimal GetPercentile(IndexValuationEntity entity)
         {
-            if (entity.PreparationTime.AddYears(5) > DateTime.Now)
+            if (entity.PreparationTime.AddYears(5) > this._timeProvider.Now)
             {// 指数编制时间小于5年，不参与估值预测
                 return 101;
             }
@@ -78,39 +80,8 @@ namespace Snowball.Domain.Stock.Services
 
         public async Task<DateTime> GetLastUpdateTimeAsync()
         {
-            const string key = "IndexValuation";
-            var entity = await this._updatePointRepository.GetAsync(key);
+            var entity = await this._updatePointRepository.GetAsync(GlobalConstant.IndexValuationKey);
             return entity.UpdateTime;
-        }
-
-        private async Task CrawlingIndexValuation()
-        {
-            using (var client = this._clientFactory.CreateClient("danjuanfunds"))
-            {
-                var httpResponse = await client.GetAsync("/djapi/index_eva/dj");
-                var json = await httpResponse.Content.ReadAsStringAsync();
-                JObject jObject = JObject.Parse(json);
-                var items = jObject["data"]["items"];
-                var list = new List<IndexValuationEntity>();
-                foreach (var item in items)
-                {
-                    var entity = new IndexValuationEntity
-                    {
-                        Code = item["index_code"].ToString(),
-                        Description = "",
-                        DividendYield = Convert.ToDecimal(item["yeild"]),
-                        PB = Convert.ToDecimal(item["pb"]),
-                        PBPercentile = Convert.ToDecimal(item["pb_percentile"]),
-                        PE = Convert.ToDecimal(item["pe"]),
-                        PEPercentile = Convert.ToDecimal(item["pe_percentile"]),
-                        PreparationTime = DateUtil.GetDateTime(Convert.ToInt64(item["begin_at"]), true),
-                        ROE = Convert.ToDecimal(item["roe"]),
-                        Title = item["name"].ToString()
-                    };
-                    await this._indexValuationRepository.InsertAsync(entity);
-                    list.Add(entity);
-                }
-            }
         }
     }
 }

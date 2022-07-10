@@ -36,11 +36,6 @@ namespace Snowball.Api
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
             
-            services.AddHttpClient("danjuanfunds", conf =>
-            {
-                conf.BaseAddress = new Uri("https://danjuanfunds.com/");
-            });
-           
             services.AddSingleton<TimeProvider, SystemTimeProvider>();
             services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();

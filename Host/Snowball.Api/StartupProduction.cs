@@ -34,10 +34,6 @@ namespace Snowball.Api
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
 
-            services.AddHttpClient("danjuanfunds", conf =>
-            {
-                conf.BaseAddress = new Uri("https://danjuanfunds.com/");
-            });
             // 配置Hsts
             services.AddHsts(options =>
             {

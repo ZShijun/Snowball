@@ -26,6 +26,14 @@ namespace Snowball.Repositories.Stock
             return count > 0;
         }
 
+        public async Task<bool> UpdateAsync(IndexValuationEntity entity)
+        {
+            string sql = "UPDATE Index_Valuation SET Title=@Title,PE=@PE,PEPercentile=@PEPercentile,PB=@PB,PBPercentile=@PBPercentile,ROE=@ROE,DividendYield=@DividendYield,ModifyTime=@ModifyTime WHERE `Code`=@Code;";
+            using IDbConnection dbConnection = CreateDbConnection();
+            var count = await dbConnection.ExecuteAsync(sql, entity);
+            return count > 0;
+        }
+
         public Task<IEnumerable<IndexValuationEntity>> GetAllAsync()
         {
             string sql = @"SELECT * FROM Index_Valuation WHERE IsDel=0;";

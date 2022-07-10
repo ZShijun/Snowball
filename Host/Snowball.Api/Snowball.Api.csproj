@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <UserSecretsId>87d90ac6-d74f-41b4-8eb2-c84d5bbe48f7</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,13 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Snowball.Application\Snowball.Application.csproj" />
-    <ProjectReference Include="..\..\Domain\Snowball.Domain.Stock\Snowball.Domain.Stock.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Snowball.Repositories.Bookshelf\Snowball.Repositories.Bookshelf.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Snowball.Repositories.Stock\Snowball.Repositories.Stock.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Snowball.Repositories.Wechat\Snowball.Repositories.Wechat.csproj" />
