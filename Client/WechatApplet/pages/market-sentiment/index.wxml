@@ -1,4 +1,5 @@
 <!--pages/market-sentiment/index.wxml-->
 <view>
-市场情绪
+<image src="../../images/developing.gif" style="margin-top: 100px; width: 100%;"></image>
+<view style="margin-top: 30px; font-size: 13px;text-align: center;color: #909090;">开发中，敬请期待...</view>
 </view>

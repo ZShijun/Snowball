@@ -1,4 +1,47 @@
 <!--pages/index-valuation/index.wxml-->
+<view style="width:100%;height:100%;display: flex;">
+ <view class="header">
+  <view class="update-tip">最近更新：<text>{{lastUpdateTime}}</text></view>
+  <view class="swiper-tab">
+    <view class="swiper-tab-list {{indexStyle==0 ? 'on' : ''}}" data-index-style="0" bindtap="swichNav">全部</view>
+    <view class="swiper-tab-list {{indexStyle==1 ? 'on' : ''}}" data-index-style="1" bindtap="swichNav">宽基</view>
+    <view class="swiper-tab-list {{indexStyle==2 ? 'on' : ''}}" data-index-style="2" bindtap="swichNav">行业</view>
+    <view class="swiper-tab-list {{indexStyle==3 ? 'on' : ''}}" data-index-style="3" bindtap="swichNav">策略</view>
+    <view class="swiper-tab-list {{indexStyle==4 ? 'on' : ''}}" data-index-style="4" bindtap="swichNav">全球</view>
+  </view>
+  <view class="index-header">
+    <text>名称</text>
+    <text>PE</text>
+    <text>PB</text>
+    <text>ROE(%)</text>
+    <text>股息率(%)</text>
+  </view>
+ </view>
+ <scroll-view class='main' scroll-y>
+    <block wx:for="{{indexValuations}}" wx:key="code">
+      <view class="index-list" style="background-color: {{item.valuationColor}};">
+        <view>
+          <text class="index-list-title">{{item.title}}</text>
+          <text class="index-list-subtitle">{{item.code}}</text>
+        </view>
+        <view>
+          <text class="index-list-item">{{item.pe}}</text>
+          <text class="index-list-subitem">{{item.pePercentile}}%</text>
+        </view>
+        <view>
+          <text class="index-list-item">{{item.pb}}</text>
+          <text class="index-list-subitem">{{item.pbPercentile}}%</text>
+        </view>
+        <view>
+          <text class="index-list-item">{{item.roe}}</text>
+        </view>
+        <view>
+          <text class="index-list-item">{{item.dividendYield}}</text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>
 <view>
-指数估值
+  <loading wx:if="{{showLoading}}">加载中</loading>
 </view>
