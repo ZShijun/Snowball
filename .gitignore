@@ -7,3 +7,5 @@
 **/.config
 **/logs
 /Host/Snowball.Api/Snowball.Api.xml
+/Host/Snowball.JobScheduler/appsettings.Development.json
+/Host/Snowball.Api/appsettings.Development.json
