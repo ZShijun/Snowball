@@ -8,8 +8,7 @@ namespace Snowball.Repositories.Stock
         public static IServiceCollection AddStockRepository(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IIndexValuationRepository, IndexValuationRepository>()
-                .AddSingleton<IUpdatePointRepository, UpdatePointRepository>();
+                .AddSingleton<IIndexValuationRepository, IndexValuationRepository>();
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Snowball.Application;
 using Snowball.Core;
+using Snowball.Core.Cache;
 using Snowball.Core.Utils;
 using Snowball.Domain.Bookshelf;
 using Snowball.Domain.Stock;
@@ -33,6 +34,8 @@ namespace Snowball.Api
             services.AddMySql(options => {
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
+
+            services.AddCache(options => Configuration.Bind("Cache", options));
 
             // 配置Hsts
             services.AddHsts(options =>

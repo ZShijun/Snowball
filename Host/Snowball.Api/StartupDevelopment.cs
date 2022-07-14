@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Snowball.Application;
 using Snowball.Core;
+using Snowball.Core.Cache;
 using Snowball.Core.Utils;
 using Snowball.Domain.Bookshelf;
 using Snowball.Domain.Stock;
@@ -32,10 +32,13 @@ namespace Snowball.Api
         {
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddMySql(options => {
+            services.AddMySql(options =>
+            {
                 options.Default = Configuration.GetValue<string>("ConnectionStrings:Default");
             });
-            
+
+            services.AddCache(options => Configuration.Bind("Cache", options));
+
             services.AddSingleton<TimeProvider, SystemTimeProvider>();
             services.Configure<WechatOption>(Configuration.GetSection("Wechat"));
             services.AddBookshelfRepository();
@@ -64,7 +67,7 @@ namespace Snowball.Api
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-            
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>

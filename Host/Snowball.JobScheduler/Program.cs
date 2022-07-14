@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Snowball.Core;
+using Snowball.Core.Cache;
 using Snowball.Core.Utils;
 using Snowball.Domain.Stock;
 using Snowball.JobScheduler.Extensions;
@@ -31,6 +32,9 @@ namespace Snowball.JobScheduler
                     services.AddMySql(options => {
                         options.Default = hostContext.Configuration.GetValue<string>("ConnectionStrings:Default");
                     });
+
+                    services.AddCache(options => hostContext.Configuration.Bind("Cache", options));
+
                     services.AddStockRepository();
                     services.AddStockDomain();
                     services.AddSingleton<TimeProvider, SystemTimeProvider>();

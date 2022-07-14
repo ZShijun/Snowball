@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Quartz;
 using Snowball.Core;
+using Snowball.Core.Cache;
 using Snowball.Core.Utils;
 using Snowball.Domain.Stock.Entities;
 using Snowball.Domain.Stock.Repositories;
@@ -22,21 +23,17 @@ namespace Snowball.JobScheduler.Jobs
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly IIndexValuationRepository _indexValuationRepository;
-        private readonly IUpdatePointRepository _updatePointRepository;
         private readonly TimeProvider _timeProvider;
-        private readonly ILogger<CrawlIndexValuationJob> _logger;
-
+        private readonly ICache _cache;
         public CrawlIndexValuationJob(IHttpClientFactory clientFactory,
                                       IIndexValuationRepository indexValuationRepository,
-                                      IUpdatePointRepository updatePointRepository,
                                       TimeProvider timeProvider,
-                                      ILogger<CrawlIndexValuationJob> logger)
+                                      ICache cache)
         {
             this._clientFactory = clientFactory;
             this._indexValuationRepository = indexValuationRepository;
-            this._updatePointRepository = updatePointRepository;
             this._timeProvider = timeProvider;
-            this._logger = logger;
+            this._cache = cache;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -58,7 +55,7 @@ namespace Snowball.JobScheduler.Jobs
                 await this._indexValuationRepository.UpdateAsync(ourValuation);
             }
 
-            await UpdateLastUpdateTimeAsync();
+            await this._cache.SetAsync(GlobalConstant.IndexValuationUpdateTime, this._timeProvider.Now, TimeSpan.FromDays(2)); ;
         }
 
         private async Task<IEnumerable<IndexValuationEntity>> CrawlIndexValuationAsync()
@@ -104,18 +101,6 @@ namespace Snowball.JobScheduler.Jobs
                 ROE = Convert.ToDecimal(item["roe"]),
                 Title = item["name"].ToString()
             };
-        }
-
-        private Task<bool> UpdateLastUpdateTimeAsync()
-        {
-            var entity = new UpdatePointEntity
-            {
-                UpdateKey = GlobalConstant.IndexValuationKey,
-                UpdateTime = this._timeProvider.Now,
-                Enabled = true
-            };
-
-            return this._updatePointRepository.UpdateAsync(entity);
         }
     }
 }

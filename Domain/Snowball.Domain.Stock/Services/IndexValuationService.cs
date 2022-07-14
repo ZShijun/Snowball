@@ -15,15 +15,12 @@ namespace Snowball.Domain.Stock.Services
     public class IndexValuationService : IIndexValuationService
     {
         private readonly IIndexValuationRepository _indexValuationRepository;
-        private readonly IUpdatePointRepository _updatePointRepository;
         private readonly TimeProvider _timeProvider;
 
         public IndexValuationService(IIndexValuationRepository indexValuationRepository,
-                                     IUpdatePointRepository updatePointRepository,
                                      TimeProvider timeProvider)
         {
             this._indexValuationRepository = indexValuationRepository;
-            this._updatePointRepository = updatePointRepository;
             this._timeProvider = timeProvider;
         }
 
@@ -76,12 +73,6 @@ namespace Snowball.Domain.Stock.Services
             }
 
             return percentage;
-        }
-
-        public async Task<DateTime> GetLastUpdateTimeAsync()
-        {
-            var entity = await this._updatePointRepository.GetAsync(GlobalConstant.IndexValuationKey);
-            return entity.UpdateTime;
         }
     }
 }

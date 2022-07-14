@@ -12,7 +12,5 @@ namespace Snowball.Domain.Stock
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<IndexValuationDto>> GetAllAsync();
-
-        Task<DateTime> GetLastUpdateTimeAsync();
     }
 }
