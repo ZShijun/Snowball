@@ -65,13 +65,13 @@ namespace Snowball.Core.Cache
         public TValue Get<TValue>(string key)
         {
            var value = this._db.StringGet(key);
-            return JsonUtil.ToObject<TValue>(value);
+            return JsonUtil.ToObject<TValue>(value.ToString());
         }
 
         public async Task<TValue> GetAsync<TValue>(string key)
         {
             var value = await this._db.StringGetAsync(key);
-            return JsonUtil.ToObject<TValue>(value);
+            return JsonUtil.ToObject<TValue>(value.ToString());
         }
 
         public void Dispose()
